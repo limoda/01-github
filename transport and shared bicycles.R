@@ -1,37 +1,37 @@
-#Êı¾İµ¼Èë#
+#æ•°æ®å¯¼å…¥#
 read.csv("traf.csv")
 traf <- read.csv("traf.csv")
 traffic <- traf[,3:12]
 
-#OLS»Ø¹é·ÖÎö#
+#OLSå›å½’åˆ†æ#
 lm1 <- lm(bs~pa+pc+busdensity+bus+taxi+rushhour+speed+jam+time+stopcover,data = traf)
 print(lm1)
 summary(lm1)
 
-#Ïà¹Ø·ÖÎö#
+#ç›¸å…³åˆ†æ#
 library(corrplot)
 options(digits = 2)
 cor1 <- cor(traffic)
 print(cor1)
 corrplot(cor1,"shade")
 
-#¶àÖØ¹²ÏßĞÔ¼ìÑé#
+#å¤šé‡å…±çº¿æ€§æ£€éªŒ#
 library(car)
 vif1 <- vif(lm1)
 print(vif1)
 
-#Áë»Ø¹é#
+#å²­å›å½’#
 library(MASS)
 plot(lm.ridge(bs~pa+pc+busdensity+bus+taxi+rushhour+speed+jam+time+stopcover,data = traf,lambda=seq(0,0.9,0.001)))
 select(lm.ridge(bs~pa+pc+busdensity+bus+taxi+rushhour+speed+jam+time+stopcover,data = traf,lambda=seq(0,0.9,0.001)))
 print(rlm)
 
-#Òò×Ó·ÖÎö#
-fa <- factanal(traffic,factors = 3,rotation = "none")
+#å› å­åˆ†æ#
+fa <- factanal(traffic,factors = 4,rotation = "none")
 print(fa)
-fa2 <- factanal(traffic,factors = 3)
+fa2 <- factanal(traffic,factors = 4)
 print(fa2)
-fa3 <- factanal(traffic,factors=3,scores = "regression")
+fa3 <- factanal(traffic,factors=4,scores = "regression")
 print(fa3$scores)
 library(mvstats)
 rank1 <- factanal.rank(fa3,plot = T)
